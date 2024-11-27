@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 
 const TicTacToe = () => {
-  // Configuration input states
+
   const [gridSizeInput, setGridSizeInput] = useState(3);
   const [winStreakInput, setWinStreakInput] = useState(3);
-
-  // Game configuration states
   const [gridSize, setGridSize] = useState(null);
   const [winStreak, setWinStreak] = useState(null);
   
@@ -16,35 +14,32 @@ const TicTacToe = () => {
 
   // Submit Game Configuration
   const handleSubmitConfiguration = () => {
-    // Validate grid size
+ 
     if (gridSizeInput < 3 || gridSizeInput > 10) {
       alert('Grid size must be between 3 and 10');
       return;
     }
 
-    // Validate win streak
     if (winStreakInput < 3 || winStreakInput > gridSizeInput) {
       alert(`Win streak must be between 3 and ${gridSizeInput}`);
       return;
     }
 
-    // Set game configuration
+
     setGridSize(gridSizeInput);
     setWinStreak(winStreakInput);
 
-    // Initialize board
+
     setBoard(Array(gridSizeInput * gridSizeInput).fill(null));
     
-    // Reset game state
+
     setCurrentPlayer('X');
     setWinner(null);
   };
 
-  // Check for winner
   const checkWinner = (newBoard) => {
     if (!gridSize || !winStreak) return null;
 
-    // Row check
     for (let row = 0; row < gridSize; row++) {
       for (let col = 0; col <= gridSize - winStreak; col++) {
         let match = true;
@@ -110,7 +105,7 @@ const TicTacToe = () => {
 
   // Handle cell click
   const handleCellClick = (index) => {
-    // Don't allow move if game not started, cell filled, or game won
+
     if (!gridSize || board[index] || winner) return;
 
     const newBoard = [...board];
@@ -121,7 +116,7 @@ const TicTacToe = () => {
     if (gameResult) {
       setWinner(gameResult);
     } else {
-      // Switch players
+      
       setCurrentPlayer(currentPlayer === 'X' ? 'O' : 'X');
     }
   };
@@ -221,12 +216,13 @@ const TicTacToe = () => {
                   Play Again
                 </button>
               )}
+              {!winner&&(
               <button 
                 onClick={resetGame}
                 className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
               >
                 Reset Configuration
-              </button>
+              </button>)}
             </div>
           </div>
         </>
